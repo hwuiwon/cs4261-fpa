@@ -4,6 +4,7 @@ from utils import deserialize
 
 class UserModel(BaseModel):
     id: str
+    name: str
     todo_list: list
 
 
@@ -12,6 +13,7 @@ def to_user_model(response: dict) -> UserModel:
 
     return UserModel(
         id=item.get("id", ""),
+        name=item.get("name", ""),
         todo_list=item.get("todo_list", []),
     )
 
