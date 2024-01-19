@@ -66,11 +66,12 @@ class DynamoDBService:
 
         return response
 
-    def create_user(self, user_id: str):
+    def register_user(self, user_id: str, name: str):
         logger.info("user_id={}", user_id)
 
         new_user = {
-            "id": {"S": id},
+            "id": {"S": user_id},
+            "name": {"S": name},
             "todo_list": {"L": []},
         }
 
@@ -114,7 +115,7 @@ class DynamoDBService:
             e.message = "Could not create new todo item"
             raise
 
-    def remove_todo_item(self, user_id: str, todo_id: str) -> dict:
+    def delete_todo_item(self, user_id: str, todo_id: str) -> dict:
         logger.info("user_id={}, todo_id={}", user_id, todo_id)
 
         user = self.get_user(user_id)
@@ -124,5 +125,5 @@ class DynamoDBService:
         try:
             self.put_item(DYNAMODB_USER_TABLE, serialize(user.model_dump()))
         except FPADBException as e:
-            e.message = "Could not create new todo item"
+            e.message = "Could not delete new todo item"
             raise
