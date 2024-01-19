@@ -1,13 +1,26 @@
 import json
+import sys
 from http import HTTPStatus
 
 import requests
 from constants import API_KEY, API_URL
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from loguru import logger
 from models.ResponseModels import ErrorDTO, WeatherResponse
 
 app = FastAPI()
+
+logger.remove()
+logger.add(
+    sys.stderr,
+    format=(
+        "<green>{time:YYYY-MM-DD HH:mm:ss.SSS!UTC}</green> "
+        "| <level>{level: <5}</level> | <cyan>{file}</cyan>:<cyan>{line}</cyan> "
+        "<yellow>{function}</yellow> - <level>{message}</level>"
+    ),
+    level="INFO",
+)
 
 
 @app.get("/")
@@ -25,6 +38,8 @@ async def root():
     },
 )
 async def weather(zip_code: str):
+    logger.info("zip_code={}", zip_code)
+
     response = requests.get(f"{API_URL}?q={zip_code}&key={API_KEY}")
     data = json.loads(response.text)
 
