@@ -5,4 +5,5 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-BASE_ENV = os.environ["BASE_ENV"]
+API_KEY = os.environ["API_KEY"]
+API_URL = "https://api.weatherapi.com/v1/current.json"
