@@ -256,7 +256,7 @@ async def delete_todo(delete_request: DeleteTodoRequest):
 
     try:
         dynamodb_service.delete_todo_item(
-            id=delete_request.id,
+            todo_id=delete_request.id,
             user_id=delete_request.user_id,
         )
     except FPADBException as e:
