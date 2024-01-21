@@ -120,7 +120,7 @@ class DynamoDBService:
 
         user = self.get_user(user_id)
         todo_list = user.todo_list
-        user.todo_list = [todo for todo in todo_list if todo["id"] != todo_id]
+        user.todo_list = [todo for todo in todo_list if todo["id"]["S"] != todo_id]
 
         try:
             self.put_item(DYNAMODB_USER_TABLE, serialize(user.model_dump()))
