@@ -32,13 +32,23 @@ pre-commit install
 
 5. Create .env file
 
-Ask teammates for the environment configuration
-
 ```bash
 touch .env
 ```
 
-6. Run the api using the following command
+6. Paste the following to the .env file
+
+```bash
+API_KEY="773cf9ff6d4346ff912234027241801"
+
+AWS_ACCESS_KEY="AKIA6ODU5UCSVNCPCVK7"
+AWS_SECRET_ACCESS_KEY="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"
+AWS_REGION="us-east-2"
+
+DYNAMODB_USER_TABLE="fpa-user"
+```
+
+7. Run the api using the following command
 
 ```bash
 cd app
