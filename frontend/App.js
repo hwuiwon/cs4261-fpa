@@ -133,7 +133,7 @@ function ToDoListScreen() {
   const renderGoalHeader = (goal, setModalVisible) => {
     return (
       <TouchableOpacity onLongPress={() => handleLongPress(goal.id)} style={styles.goalContainer}>
-        <FontAwesome5 name="fish" size={20} color="#FFF" solid />
+        <FontAwesome5 name="fish" size={20} color="#FFF" solid style={styles.goalIcon}/>
         <Text style={styles.goalText}>{goal.name}</Text>
         <TouchableOpacity style={styles.plusButton} onPress={() => setModalVisible(true)}>
           <Text style={styles.plusButtonText}>+</Text>
@@ -255,6 +255,9 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  goalIcon: {
+    marginLeft: 5,
+  },
   loginButton: {
     backgroundColor: '#21364d', // Example button background color
     padding: 8,
@@ -292,16 +295,18 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     // Style your delete button
-    backgroundColor: 'red',
+    backgroundColor: 'white',
     // padding: 5,
     borderRadius: 5,
     height: 20,
     width: 20,
-    alignItems: 'center'
+    alignItems: 'center',
+    borderColor: "#21364d",
+    borderWidth: 0.5,
   },
   deleteButtonText: {
     flexDirection: 'row',
-    color: 'white',
+    color: '#21364d',
     textAlign: 'center',
     // Add other styling for the delete button text as needed
   },
@@ -318,7 +323,7 @@ const styles = StyleSheet.create({
   },
   goalText: {
     color: '#FFF',
-    fontSize: 16,
+    fontSize: 15,
     marginLeft: 10, 
     fontWeight: 'bold',// Optional: add space between the icon and the text
     // Add other styling for the goal text as needed
@@ -372,6 +377,7 @@ const styles = StyleSheet.create({
     
   },
   plusButton: {
+    marginRight: 2,
     marginLeft: 10,
     backgroundColor: '#273E57',
     borderRadius: 20,
