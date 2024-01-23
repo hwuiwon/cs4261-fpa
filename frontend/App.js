@@ -173,7 +173,10 @@ function ToDoListScreen() {
       <Modal visible={isVisible} animationType="slide" transparent={true} onRequestClose={onClose}>
         <View style={styles.modalView}>
           <TextInput style={styles.goalInput} onChangeText={setGoalName} value={goalName} autoFocus />
-          <Button title="Done" onPress={() => handleSaveGoalName(goalName)} />
+          {/* <Button title="Done" onPress={() => handleSaveGoalName(goalName)} /> */}
+          <TouchableOpacity onPress={() => handleSaveGoalName(goalName)} style={styles.addButton}>
+  <Text style={styles.addButtonText}>Edit</Text>
+</TouchableOpacity>
         </View>
       </Modal>
     );
@@ -255,6 +258,28 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  goalInput: {
+    color: 'white',
+  },
+  addButton: {
+    backgroundColor: '#21364d', // Example button background color
+    borderColor: 'white',
+    borderWidth: '1',
+    padding: 3,
+    textAlignVertical: 'center',
+    // height: 35,
+    width: '20%',
+    borderRadius: 10,
+    marginTop: 15, // Add margin if needed
+    // ... other button styles
+    alignSelf: 'center',
+  },
+  addButtonText: {
+    color: 'white', // Change text color here
+    textAlign: 'center',
+    fontSize: 13,
+    // ... other text styles
+  },
   goalIcon: {
     marginLeft: 5,
   },
@@ -407,19 +432,39 @@ const styles = StyleSheet.create({
   },
   modalView: {
     // Styles for your modal view
-    marginTop: '50%',
-    backgroundColor: 'white',
+    width: '75%',
+    marginTop: '101%',
+    backgroundColor: '#21364d',
     borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
+    padding: 25,
+    alignSelf: 'center',
+    justifyContent: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2
     },
-    shadowOpacity: 0.25,
+    shadowOpacity: 0.5,
     shadowRadius: 4,
     elevation: 5
   },
+  // modalView: {
+  //   // margin: 20,
+  //   // width: '80%',
+  //   marginTop: 40,
+  //   backgroundColor: "white",
+  //   borderRadius: 20,
+  //   padding: 35,
+  //   alignItems: "center",
+  //   justifyContent: 'center',
+  //   shadowColor: "#000",
+  //   shadowOffset: {
+  //     width: 0,
+  //     height: 2
+  //   },
+  //   shadowOpacity: 0.25,
+  //   shadowRadius: 4,
+  //   elevation: 5
+  // },
 });
 

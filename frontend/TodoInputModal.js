@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, View, TextInput, Button, StyleSheet } from 'react-native';
+import { Modal, View, TextInput, Button, StyleSheet, TouchableOpacity, Text } from 'react-native';
 
 const TodoInputModal = ({ isVisible, onDismiss, onAdd }) => {
   const [newTodo, setNewTodo] = useState('');
@@ -22,11 +22,15 @@ const TodoInputModal = ({ isVisible, onDismiss, onAdd }) => {
           <TextInput
             style={styles.modalInput}
             placeholder="New Todo"
+            placeholderTextColor="gray"
             onChangeText={setNewTodo}
             value={newTodo}
             autoFocus
           />
-          <Button title="Add" onPress={handleAdd} />
+          <TouchableOpacity onPress={handleAdd} style={styles.addButton}>
+  <Text style={styles.addButtonText}>Add Items</Text>
+</TouchableOpacity>
+
         </View>
       </View>
     </Modal>
@@ -35,7 +39,8 @@ const TodoInputModal = ({ isVisible, onDismiss, onAdd }) => {
 
 const styles = StyleSheet.create({
     modalView: {
-        margin: 20,
+        // margin: 20,
+        marginBottom: 40,
         backgroundColor: "white",
         borderRadius: 20,
         padding: 35,
@@ -55,12 +60,29 @@ const styles = StyleSheet.create({
         margin: 12,
         borderWidth: 1,
         padding: 10,
+        borderRadius: 10,
       },
       centeredView: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
         marginTop: 22
+      },
+      addButton: {
+        backgroundColor: '#21364d', // Example button background color
+        padding: 8,
+        textAlignVertical: 'center',
+        // height: 35,
+        width: '50%',
+        borderRadius: 10,
+        marginTop: 7, // Add margin if needed
+        // ... other button styles
+      },
+      addButtonText: {
+        color: 'white', // Change text color here
+        textAlign: 'center',
+        fontSize: 13,
+        // ... other text styles
       },
 });
 
