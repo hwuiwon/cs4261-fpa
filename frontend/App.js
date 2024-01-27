@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, TextInput, Button, Text, FlatList, TouchableOpacity, Modal} from 'react-native';
+import { Image, StyleSheet, View, TextInput, Button, Text, FlatList, TouchableOpacity, Modal} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TodoInputModal from './TodoInputModal';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import * as Location from 'expo-location';
+
 
 
 
@@ -75,7 +78,64 @@ function ToDoListScreen() {
     loadGoals();
   }, []);
   
-
+  const WeatherComponent = () => {
+    const [weather, setWeather] = useState(null);
+  
+    useEffect(() => {
+      const fetchWeather = async (latitude, longitude) => {
+        try {
+          const response = await axios.get(`http://api.weatherapi.com/v1/current.json?key=773cf9ff6d4346ff912234027241801&q=${latitude},${longitude}`);
+          setWeather(response.data);
+        } catch (error) {
+          console.error("Error fetching weather data", error);
+        }
+      };
+      const getLocationAndWeather = async () => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== 'granted') {
+          console.error('Permission to access location was denied');
+          return;
+        }
+  
+        let location = await Location.getCurrentPositionAsync({});
+        fetchWeather(location.coords.latitude, location.coords.longitude);
+      };
+  
+      getLocationAndWeather();
+    }, []);
+    //   fetchWeather();
+    // }, []);
+    
+    const getWeatherIcon = (iconCode) => {
+      // If the API returns a full URL for the icon:
+      return `http://link.to.weather.icons/${iconCode}.png`;
+  
+      // Or if you have local images mapped to condition codes:
+      // return localImages[iconCode]; // where localImages is an object mapping codes to require('path/to/image')
+    };
+    if (!weather) {
+      return <Text>Loading weather...</Text>;
+    }
+    
+    return (
+      <View style={styles.weatherContainer}>
+        <Text style={styles.weatherText}>My Location</Text>
+        <Text style={styles.locationText}>{weather.location.name}, {weather.location.region}</Text>
+        <Text style={styles.tempText}>{weather.current.temp_c}°C</Text>
+        <Text style={styles.weatherDesc}>{weather.current.condition.text}</Text>
+        <Text style={styles.todayText}>{getTodaysDate()}</Text>
+        {/* <Image
+          source={{ uri: getWeatherIcon(weather.current.condition.icon) }}
+          style={styles.weatherIcon}
+        /> */}
+      </View>
+    );
+  };
+  const getTodaysDate = () => {
+    const date = new Date();
+    return date.toDateString(); // Formats the date as a string in the form "Thu Jan 27 2022"
+  };
+  
   const addTodo = (newTodo, setTodos) => {
     setTodos(prevTodos => {
       const updatedTodos = [...prevTodos, { key: Date.now().toString(), text: newTodo }];
@@ -210,6 +270,7 @@ function ToDoListScreen() {
 
   return (
     <View style={styles.todoContainer}>
+      <WeatherComponent />
       {/* {renderTodoList(todosList1, 1)}
       {renderInputItems(todosList1, setTodosList1, 'todosList1')}
       {renderTodoList(todosList1, 2)}
@@ -258,6 +319,43 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  weatherContainer: {
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#EFEFEF', // Light grey background, adjust as needed
+    padding: 10,
+    borderRadius: 10,
+    marginVertical: 10, // Adds vertical space around the container
+    // Additional styling for shadow, borders, etc., can be added here
+  },
+  weatherText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333', // Dark text color, adjust as needed
+    marginBottom: 5, // Space between this and the next text
+  },
+  locationText: {
+    fontSize: 16,
+    color: '#555', // Slightly lighter text color
+    marginBottom: 5,
+  },
+  tempText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#000', // Black or primary color for emphasis
+    marginBottom: 5,
+  },
+  weatherDesc: {
+    fontSize: 16,
+    color: '#555',
+    marginBottom: 5,
+  },
+  todayText: {
+    fontSize: 16,
+    color: '#333',
+    // No marginBottom needed here unless you want space below the date
+  },
   goalInput: {
     color: 'white',
   },
