@@ -7,19 +7,27 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import * as Location from 'expo-location';
+// import Amplify from 'aws-amplify';
+// import awsconfig from './aws-exports'; // your generated AWS exports file
+// import { Auth } from 'aws-amplify';
 
-
-
+// Amplify.configure(awsconfig);
 
 const Stack = createNativeStackNavigator();
 
 function LoginScreen({ navigation }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleLogin = () => {
-    // Perform login logic here
-    navigation.navigate('ToDoList');
+  const handleLogin = async () => {
+    try {
+      // await Auth.signIn(username, password);
+      navigation.navigate('ToDoList'); // Navigate to your next screen on successful sign in
+    } catch (error) {
+      setErrorMessage(error.message);
+      console.log(error);
+    }
   };
 
   return (
@@ -31,6 +39,7 @@ function LoginScreen({ navigation }) {
       {/* <Button title="Confirm" onPress={handleLogin} style = {styles.loginButton} /> */}
       <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
         <Text style={styles.loginButtonText}>Confirm</Text>
+        {errorMessage ? <Text>{errorMessage}</Text> : null}
       </TouchableOpacity>
     </View>
   );
