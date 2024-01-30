@@ -16,22 +16,16 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Also run the backend API by following this [README](https://github.com/hwuiwon/cs4261-fpa/blob/main/backend/README.md).
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Description
+This app is made with NextJs and React.
 
-## Learn More
+You would also have to run backend following the description that's in README.md of backend folder in order to make interactions with the database and fetch weather data from third party API.
 
-To learn more about Next.js, take a look at the following resources:
+Use `test@gmail.com` for id and `testpassword` for password.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+When you're running the app, first you will see the login screen. After you login, you will see the box including your location, temperature, 
+description for weather, and today's date. We brought this data from third-party weather api and based on your location, it brings the data for weather. You can also specify the location using the ZIP code -- for example, if you use 10001, our app will show the weather of NYC.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
+You can also view current todo items that you have and add/delete todo items. Feel free to play with it.
